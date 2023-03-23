@@ -9,10 +9,11 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from .permissions import IsAuthorOrReadOnly
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
+from .service import get_model_objects
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = get_model_objects(Post)
     serializer_class = PostSerializer
     permission_classes = (IsAuthorOrReadOnly, )
 
@@ -20,7 +21,7 @@ class PostViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     user = get_user_model()
 
-    queryset = user.objects.all()
+    queryset = get_model_objects(user)
     serializer_class = UserSerializer
     permission_classes = (IsAdminUser, )
 
